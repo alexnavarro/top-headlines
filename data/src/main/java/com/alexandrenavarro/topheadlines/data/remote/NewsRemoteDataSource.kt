@@ -8,13 +8,13 @@ import retrofit2.HttpException
 import java.io.IOException
 import javax.inject.Inject
 
-class NewsRemoteDataSource @Inject constructor(
+open class NewsRemoteDataSource @Inject constructor(
     private val newsApiService: NewsApiService,
     @NewsSource private val source: String,
     @NewsApiKey private val apiKey: String,
 ) {
 
-    suspend fun getTopHeadlines(): AppResult<List<ArticleDto>> =
+    open suspend fun getTopHeadlines(): AppResult<List<ArticleDto>> =
         try {
             val response = newsApiService.getTopHeadlines(
                 sources = source,

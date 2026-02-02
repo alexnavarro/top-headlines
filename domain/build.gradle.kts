@@ -1,12 +1,10 @@
 plugins {
     alias(libs.plugins.android.library)
     alias(libs.plugins.kotlin.android)
-    alias(libs.plugins.ksp)
-    alias(libs.plugins.hilt.android)
 }
 
 android {
-    namespace = "com.alexandrenavarro.topheadlines.data"
+    namespace = "com.alexandrenavarro.topheadlines.domain"
     compileSdk = 36
 
     defaultConfig {
@@ -36,33 +34,9 @@ android {
 
 dependencies {
     implementation(project(":core"))
-    implementation(project(":domain"))
 
-    // Coroutines
     implementation(libs.kotlinx.coroutines.core)
-    implementation(libs.kotlinx.coroutines.android)
 
-    // Hilt
-    implementation(libs.hilt.android)
-    ksp(libs.hilt.compiler)
-
-    // Retrofit + OkHttp
-    implementation(libs.retrofit)
-    implementation(libs.retrofit.converter.moshi)
-    implementation(libs.okhttp)
-    implementation(libs.okhttp.logging.interceptor)
-
-    // Moshi
-    implementation(libs.moshi)
-    ksp(libs.moshi.kotlin.codegen)
-
-    // Coil
-    implementation(libs.coil.compose)
-    implementation(libs.coil.network.okhttp)
-
-    // Test
     testImplementation(libs.junit)
     testImplementation(libs.kotlinx.coroutines.test)
-    testImplementation(libs.turbine)
-    testImplementation(libs.okhttp.mockwebserver)
 }
