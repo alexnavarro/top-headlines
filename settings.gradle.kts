@@ -22,4 +22,5 @@ dependencyResolutionManagement {
 rootProject.name = "Top headlines"
 include(":app")
 include(":core")
+include(":data")
  
