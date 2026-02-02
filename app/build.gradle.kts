@@ -34,6 +34,24 @@ android {
     }
     buildFeatures {
         compose = true
+        buildConfig = true
+    }
+
+    flavorDimensions += "newsSource"
+
+    productFlavors {
+        create("bbc") {
+            dimension = "newsSource"
+            applicationIdSuffix = ".bbc"
+            buildConfigField("String", "NEWS_SOURCE", "\"bbc-news\"")
+            buildConfigField("String", "NEWS_PROVIDER_TITLE", "\"BBC News\"")
+        }
+        create("cnn") {
+            dimension = "newsSource"
+            applicationIdSuffix = ".cnn"
+            buildConfigField("String", "NEWS_SOURCE", "\"cnn\"")
+            buildConfigField("String", "NEWS_PROVIDER_TITLE", "\"CNN\"")
+        }
     }
 }
 
