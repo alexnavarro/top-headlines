@@ -5,4 +5,5 @@ import com.alexandrenavarro.topheadlines.domain.model.Article
 
 interface NewsRepository {
     suspend fun getTopHeadlines(): AppResult<List<Article>>
+    fun getArticleById(id: String): Article?
 }

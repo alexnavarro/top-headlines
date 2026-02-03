@@ -45,6 +45,7 @@ class NewsRepositoryImplTest {
         val articles = (result as AppResult.Success).data
         assertEquals(1, articles.size)
         with(articles[0]) {
+            assertEquals("https://example.com/article", id)
             assertEquals("Test Title", title)
             assertEquals("Test Description", description)
             assertEquals("https://example.com/article", url)
@@ -52,6 +53,7 @@ class NewsRepositoryImplTest {
             assertEquals("2024-01-15T10:30:00Z", publishedAt)
             assertEquals("John Doe", author)
             assertEquals("BBC News", sourceName)
+            assertEquals("Test Content", content)
         }
     }
 
@@ -77,6 +79,68 @@ class NewsRepositoryImplTest {
     }
 
     @Test
+    fun `given getTopHeadlines succeeded when getArticleById then returns cached article`() = runTest {
+        val articlesDto = listOf(
+            ArticleDto(
+                source = SourceDto(id = "bbc-news", name = "BBC News"),
+                author = "John Doe",
+                title = "Test Title",
+                description = "Test Description",
+                url = "https://example.com/article",
+                urlToImage = "https://example.com/image.jpg",
+                publishedAt = "2024-01-15T10:30:00Z",
+                content = "Test Content",
+            )
+        )
+        fakeDataSource.result = AppResult.Success(articlesDto)
+        repository.getTopHeadlines()
+
+        val article = repository.getArticleById("https://example.com/article")
+
+        assertEquals("Test Title", article?.title)
+        assertEquals("https://example.com/article", article?.url)
+    }
+
+    @Test
+    fun `given getTopHeadlines not called when getArticleById then returns null`() {
+        val article = repository.getArticleById("https://example.com/article")
+
+        assertEquals(null, article)
+    }
+
+    @Test
+    fun `given getTopHeadlines returned error when getArticleById then returns null`() = runTest {
+        fakeDataSource.result = AppResult.Error(IOException("Network error"))
+        repository.getTopHeadlines()
+
+        val article = repository.getArticleById("https://example.com/article")
+
+        assertEquals(null, article)
+    }
+
+    @Test
+    fun `given article with blank id when getTopHeadlines then does not cache it`() = runTest {
+        val articlesDto = listOf(
+            ArticleDto(
+                source = SourceDto(id = "src", name = "Source"),
+                author = null,
+                title = "No URL",
+                description = "Desc",
+                url = "",
+                urlToImage = null,
+                publishedAt = "2024-01-15T10:30:00Z",
+                content = null,
+            )
+        )
+        fakeDataSource.result = AppResult.Success(articlesDto)
+        repository.getTopHeadlines()
+
+        val article = repository.getArticleById("")
+
+        assertEquals(null, article)
+    }
+
+    @Test
     fun `given datasource returns article with null fields when getTopHeadlines then maps to empty strings`() = runTest {
         val articlesDto = listOf(
             ArticleDto(
@@ -96,6 +160,7 @@ class NewsRepositoryImplTest {
 
         assertTrue(result is AppResult.Success)
         val article = (result as AppResult.Success).data[0]
+        assertEquals("", article.id)
         assertEquals("", article.title)
         assertEquals("", article.description)
         assertEquals("", article.url)
@@ -103,6 +168,7 @@ class NewsRepositoryImplTest {
         assertEquals("", article.publishedAt)
         assertEquals(null, article.author)
         assertEquals("", article.sourceName)
+        assertEquals("", article.content)
     }
 }
 

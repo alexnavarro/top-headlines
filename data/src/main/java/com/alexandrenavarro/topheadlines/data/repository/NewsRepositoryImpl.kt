@@ -12,6 +12,19 @@ class NewsRepositoryImpl @Inject constructor(
     private val remoteDataSource: NewsRemoteDataSource,
 ) : NewsRepository {
 
+    private val articlesCache = mutableMapOf<String, Article>()
+
     override suspend fun getTopHeadlines(): AppResult<List<Article>> =
         remoteDataSource.getTopHeadlines().map { it.toDomain() }
+            .also { result ->
+                if (result is AppResult.Success) {
+                    result.data.forEach { article ->
+                        if (article.id.isNotBlank()) {
+                            articlesCache[article.id] = article
+                        }
+                    }
+                }
+            }
+
+    override fun getArticleById(id: String): Article? = articlesCache[id]
 }
