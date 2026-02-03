@@ -107,6 +107,7 @@ class HeadlinesViewModelTest {
     }
 
     private fun createArticle(title: String) = Article(
+        id = "https://example.com",
         title = title,
         description = "Description",
         url = "https://example.com",
@@ -114,6 +115,7 @@ class HeadlinesViewModelTest {
         publishedAt = "2024-01-15T10:00:00Z",
         author = null,
         sourceName = "Source",
+        content = "Content",
     )
 }
 
@@ -121,4 +123,5 @@ private class FakeNewsRepository : NewsRepository {
     var result: AppResult<List<Article>> = AppResult.Success(emptyList())
 
     override suspend fun getTopHeadlines(): AppResult<List<Article>> = result
+    override fun getArticleById(id: String): Article? = null
 }

@@ -1,6 +1,7 @@
 package com.alexandrenavarro.topheadlines.domain.model
 
 data class Article(
+    val id: String,
     val title: String,
     val description: String,
     val url: String,
@@ -8,4 +9,5 @@ data class Article(
     val publishedAt: String,
     val author: String?,
     val sourceName: String,
+    val content: String,
 )

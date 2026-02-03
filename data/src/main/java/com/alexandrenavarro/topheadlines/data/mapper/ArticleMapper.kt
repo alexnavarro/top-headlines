@@ -4,6 +4,7 @@ import com.alexandrenavarro.topheadlines.data.model.ArticleDto
 import com.alexandrenavarro.topheadlines.domain.model.Article
 
 fun ArticleDto.toDomain(): Article = Article(
+    id = url.orEmpty(),
     title = title.orEmpty(),
     description = description.orEmpty(),
     url = url.orEmpty(),
@@ -11,6 +12,7 @@ fun ArticleDto.toDomain(): Article = Article(
     publishedAt = publishedAt.orEmpty(),
     author = author,
     sourceName = source?.name.orEmpty(),
+    content = content.orEmpty(),
 )
 
 fun List<ArticleDto>.toDomain(): List<Article> = map { it.toDomain() }

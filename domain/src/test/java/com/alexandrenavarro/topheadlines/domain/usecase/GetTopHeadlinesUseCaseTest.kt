@@ -135,6 +135,7 @@ class GetTopHeadlinesUseCaseTest {
         title: String,
         publishedAt: String,
     ) = Article(
+        id = "https://example.com",
         title = title,
         description = "Description",
         url = "https://example.com",
@@ -142,11 +143,14 @@ class GetTopHeadlinesUseCaseTest {
         publishedAt = publishedAt,
         author = null,
         sourceName = "Source",
+        content = "Content",
     )
 }
 
 private class FakeNewsRepository : NewsRepository {
     var result: AppResult<List<Article>> = AppResult.Success(emptyList())
+    var articleById: Article? = null
 
     override suspend fun getTopHeadlines(): AppResult<List<Article>> = result
+    override fun getArticleById(id: String): Article? = articleById
 }
