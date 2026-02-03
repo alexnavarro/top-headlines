@@ -2,6 +2,7 @@ package com.alexandrenavarro.topheadlines.di
 
 import com.alexandrenavarro.topheadlines.BuildConfig
 import com.alexandrenavarro.topheadlines.data.di.NewsApiKey
+import com.alexandrenavarro.topheadlines.data.di.NewsProviderTitle
 import com.alexandrenavarro.topheadlines.data.di.NewsSource
 import dagger.Module
 import dagger.Provides
@@ -19,4 +20,8 @@ object ConfigModule {
     @Provides
     @NewsApiKey
     fun providesNewsApiKey(): String = BuildConfig.NEWS_API_KEY
+
+    @Provides
+    @NewsProviderTitle
+    fun providesNewsProviderTitle(): String = BuildConfig.NEWS_PROVIDER_TITLE
 }

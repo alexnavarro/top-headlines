@@ -9,3 +9,7 @@ annotation class NewsSource
 @Qualifier
 @Retention(AnnotationRetention.RUNTIME)
 annotation class NewsApiKey
+
+@Qualifier
+@Retention(AnnotationRetention.RUNTIME)
+annotation class NewsProviderTitle
