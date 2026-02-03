@@ -86,7 +86,7 @@ class HeadlinesViewModelTest {
         val fakeRepository = FakeNewsRepository()
         fakeRepository.result = AppResult.Error(IOException("Network error"))
         val useCase = GetTopHeadlinesUseCase(fakeRepository)
-        val viewModel = HeadlinesViewModel(useCase)
+        val viewModel = HeadlinesViewModel(useCase, "Test News")
 
         assertTrue(viewModel.uiState.value is HeadlinesUiState.Error)
 
@@ -103,7 +103,7 @@ class HeadlinesViewModelTest {
 
     private fun createViewModel(result: AppResult<List<Article>>): HeadlinesViewModel {
         val fakeRepository = FakeNewsRepository().apply { this.result = result }
-        return HeadlinesViewModel(GetTopHeadlinesUseCase(fakeRepository))
+        return HeadlinesViewModel(GetTopHeadlinesUseCase(fakeRepository), "Test News")
     }
 
     private fun createArticle(title: String) = Article(

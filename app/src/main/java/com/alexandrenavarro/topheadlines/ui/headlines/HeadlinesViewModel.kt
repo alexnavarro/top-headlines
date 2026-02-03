@@ -3,6 +3,7 @@ package com.alexandrenavarro.topheadlines.ui.headlines
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.alexandrenavarro.topheadlines.core.result.AppResult
+import com.alexandrenavarro.topheadlines.data.di.NewsProviderTitle
 import com.alexandrenavarro.topheadlines.domain.usecase.GetTopHeadlinesUseCase
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -14,6 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HeadlinesViewModel @Inject constructor(
     private val getTopHeadlines: GetTopHeadlinesUseCase,
+    @NewsProviderTitle val providerTitle: String,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HeadlinesUiState>(HeadlinesUiState.Loading)
