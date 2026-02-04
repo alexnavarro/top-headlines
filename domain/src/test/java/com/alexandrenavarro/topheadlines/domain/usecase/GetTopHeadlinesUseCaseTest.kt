@@ -135,7 +135,8 @@ class GetTopHeadlinesUseCaseTest {
         title: String,
         publishedAt: String,
     ) = Article(
-        id = "https://example.com",
+        id = "source_https://example.com",
+        sourceId = "source",
         title = title,
         description = "Description",
         url = "https://example.com",

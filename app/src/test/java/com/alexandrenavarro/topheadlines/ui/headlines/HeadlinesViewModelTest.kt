@@ -107,7 +107,8 @@ class HeadlinesViewModelTest {
     }
 
     private fun createArticle(title: String) = Article(
-        id = "https://example.com",
+        id = "source_https://example.com",
+        sourceId = "source",
         title = title,
         description = "Description",
         url = "https://example.com",

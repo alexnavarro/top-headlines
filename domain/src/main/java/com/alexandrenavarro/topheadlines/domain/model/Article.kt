@@ -2,6 +2,7 @@ package com.alexandrenavarro.topheadlines.domain.model
 
 data class Article(
     val id: String,
+    val sourceId: String,
     val title: String,
     val description: String,
     val url: String,
