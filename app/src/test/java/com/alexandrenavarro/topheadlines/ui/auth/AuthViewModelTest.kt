@@ -2,6 +2,7 @@ package com.alexandrenavarro.topheadlines.ui.auth
 
 import app.cash.turbine.test
 import kotlinx.coroutines.test.runTest
+import org.junit.Assert.assertFalse
 import org.junit.Assert.assertTrue
 import org.junit.Test
 
@@ -49,7 +50,7 @@ class AuthViewModelTest {
     fun `given biometric not available when isBiometricAvailable then returns false`() {
         val viewModel = AuthViewModel(FakeBiometricAuthenticator(canAuthenticate = false))
 
-        assertTrue(!viewModel.isBiometricAvailable())
+        assertFalse(viewModel.isBiometricAvailable())
     }
 }
 
