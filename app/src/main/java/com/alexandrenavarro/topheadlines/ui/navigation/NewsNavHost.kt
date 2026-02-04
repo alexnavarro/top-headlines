@@ -6,7 +6,6 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import androidx.navigation.toRoute
 import com.alexandrenavarro.topheadlines.ui.detail.DetailScreen
 import com.alexandrenavarro.topheadlines.ui.headlines.HeadlinesScreen
 
@@ -27,10 +26,8 @@ fun NewsNavHost(
                 }
             )
         }
-        composable<Route.Detail> { backStackEntry ->
-            val route: Route.Detail = backStackEntry.toRoute()
+        composable<Route.Detail> {
             DetailScreen(
-                articleId = route.articleId,
                 onBackClick = { navController.popBackStack() }
             )
         }
