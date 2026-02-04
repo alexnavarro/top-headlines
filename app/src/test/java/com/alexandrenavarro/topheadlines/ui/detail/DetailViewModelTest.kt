@@ -2,10 +2,9 @@ package com.alexandrenavarro.topheadlines.ui.detail
 
 import androidx.lifecycle.SavedStateHandle
 import app.cash.turbine.test
-import com.alexandrenavarro.topheadlines.domain.model.Article
-import com.alexandrenavarro.topheadlines.domain.usecase.GetArticleByIdUseCase
-import com.alexandrenavarro.topheadlines.domain.repository.NewsRepository
 import com.alexandrenavarro.topheadlines.core.result.AppResult
+import com.alexandrenavarro.topheadlines.domain.model.Article
+import com.alexandrenavarro.topheadlines.domain.repository.NewsRepository
 import kotlinx.coroutines.test.runTest
 import org.junit.Assert.assertEquals
 import org.junit.Assert.assertTrue
@@ -17,7 +16,7 @@ class DetailViewModelTest {
     fun `given article exists when init then emits success state`() = runTest {
         val article = createArticle()
         val viewModel = createViewModel(
-            articleId = "https://example.com/article",
+            articleId = "bbc-news_https://example.com/article",
             article = article,
         )
 
@@ -31,7 +30,7 @@ class DetailViewModelTest {
     @Test
     fun `given article not found when init then emits error state`() = runTest {
         val viewModel = createViewModel(
-            articleId = "https://example.com/unknown",
+            articleId = "bbc-news_https://example.com/unknown",
             article = null,
         )
 
@@ -48,11 +47,12 @@ class DetailViewModelTest {
     ): DetailViewModel {
         val fakeRepository = FakeNewsRepository(article)
         val savedStateHandle = SavedStateHandle(mapOf("articleId" to articleId))
-        return DetailViewModel(savedStateHandle, GetArticleByIdUseCase(fakeRepository))
+        return DetailViewModel(savedStateHandle, fakeRepository)
     }
 
     private fun createArticle() = Article(
-        id = "https://example.com/article",
+        id = "bbc-news_https://example.com/article",
+        sourceId = "bbc-news",
         title = "Test Title",
         description = "Test Description",
         url = "https://example.com/article",
