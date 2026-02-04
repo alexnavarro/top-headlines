@@ -5,6 +5,8 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.activity.viewModels
 import androidx.biometric.BiometricPrompt
+import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.FragmentActivity
@@ -25,21 +27,25 @@ class MainActivity : FragmentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
 
-        if (authViewModel.isBiometricAvailable()) {
-            showBiometricPrompt()
-        }
-
         setContent {
             TopHeadlinesTheme {
                 val authState by authViewModel.uiState.collectAsStateWithLifecycle()
 
                 when (authState) {
                     is AuthUiState.Authenticated -> NewsNavHost()
-                    is AuthUiState.Required -> AuthLockedScreen(
-                        onRetryClick = ::showBiometricPrompt,
-                    )
+                    is AuthUiState.Required -> {
+                        AuthLockedScreen(onRetryClick = ::showBiometricPrompt)
+                        AutoShowBiometricPrompt()
+                    }
                 }
             }
+        }
+    }
+
+    @Composable
+    private fun AutoShowBiometricPrompt() {
+        LaunchedEffect(Unit) {
+            showBiometricPrompt()
         }
     }
 
