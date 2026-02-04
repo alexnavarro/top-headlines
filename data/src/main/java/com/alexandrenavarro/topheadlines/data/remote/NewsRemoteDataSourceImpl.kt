@@ -10,8 +10,8 @@ import javax.inject.Inject
 
 class NewsRemoteDataSourceImpl @Inject constructor(
     private val newsApiService: NewsApiService,
-    @NewsSource private val source: String,
-    @NewsApiKey private val apiKey: String,
+    @param:NewsSource private val source: String,
+    @param:NewsApiKey private val apiKey: String,
 ) : NewsRemoteDataSource {
 
     override suspend fun getTopHeadlines(): AppResult<List<ArticleDto>> =

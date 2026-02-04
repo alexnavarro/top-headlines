@@ -15,7 +15,7 @@ import javax.inject.Inject
 @HiltViewModel
 class HeadlinesViewModel @Inject constructor(
     private val getTopHeadlines: GetTopHeadlinesUseCase,
-    @NewsProviderTitle val providerTitle: String,
+    @param:NewsProviderTitle val providerTitle: String,
 ) : ViewModel() {
 
     private val _uiState = MutableStateFlow<HeadlinesUiState>(HeadlinesUiState.Loading)
