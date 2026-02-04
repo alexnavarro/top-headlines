@@ -12,7 +12,6 @@ import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.verticalScroll
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
-import androidx.compose.material3.CircularProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
 import androidx.compose.material3.IconButton
@@ -26,6 +25,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.unit.dp
@@ -33,6 +33,7 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import com.alexandrenavarro.topheadlines.R
 import com.alexandrenavarro.topheadlines.domain.model.Article
 import com.alexandrenavarro.topheadlines.ui.theme.TopHeadlinesTheme
 
@@ -61,12 +62,12 @@ private fun DetailContent(
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text("Detail") },
+                title = { Text(stringResource(R.string.detail_title)) },
                 navigationIcon = {
                     IconButton(onClick = onBackClick) {
                         Icon(
                             imageVector = Icons.AutoMirrored.Filled.ArrowBack,
-                            contentDescription = "Back",
+                            contentDescription = stringResource(R.string.back),
                         )
                     }
                 },
@@ -75,17 +76,6 @@ private fun DetailContent(
         modifier = modifier,
     ) { innerPadding ->
         when (uiState) {
-            is DetailUiState.Loading -> {
-                Box(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(innerPadding),
-                    contentAlignment = Alignment.Center,
-                ) {
-                    CircularProgressIndicator()
-                }
-            }
-
             is DetailUiState.Success -> {
                 ArticleDetail(
                     article = uiState.article,
@@ -196,7 +186,8 @@ private fun DetailContentSuccessPreview() {
         DetailContent(
             uiState = DetailUiState.Success(
                 article = Article(
-                    id = "1",
+                    id = "bbc-news_https://example.com/article",
+                    sourceId = "bbc-news",
                     title = "Breaking: Major Discovery in Space Exploration",
                     description = "Scientists have announced a groundbreaking finding that could reshape our understanding of the universe and open new possibilities for future missions.",
                     url = "https://example.com/article",
@@ -219,7 +210,8 @@ private fun DetailContentSuccessNoImagePreview() {
         DetailContent(
             uiState = DetailUiState.Success(
                 article = Article(
-                    id = "2",
+                    id = "tech-news_https://example.com/article2",
+                    sourceId = "tech-news",
                     title = "Technology Update: New Framework Released",
                     description = "A new open-source framework promises to simplify mobile development across platforms.",
                     url = "https://example.com/article2",
@@ -230,17 +222,6 @@ private fun DetailContentSuccessNoImagePreview() {
                     content = "The open-source community has released a new framework that aims to unify mobile development. Early benchmarks show significant performance improvements over existing solutions.",
                 ),
             ),
-            onBackClick = {},
-        )
-    }
-}
-
-@Preview(showBackground = true)
-@Composable
-private fun DetailContentLoadingPreview() {
-    TopHeadlinesTheme {
-        DetailContent(
-            uiState = DetailUiState.Loading,
             onBackClick = {},
         )
     }

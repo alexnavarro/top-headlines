@@ -11,8 +11,10 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.alexandrenavarro.topheadlines.R
 import com.alexandrenavarro.topheadlines.ui.theme.TopHeadlinesTheme
 
 @Composable
@@ -26,18 +28,18 @@ fun AuthLockedScreen(
         verticalArrangement = Arrangement.Center,
     ) {
         Text(
-            text = "Authentication required",
+            text = stringResource(R.string.auth_title),
             style = MaterialTheme.typography.headlineSmall,
         )
         Spacer(modifier = Modifier.height(8.dp))
         Text(
-            text = "Please verify your identity to continue",
+            text = stringResource(R.string.auth_subtitle),
             style = MaterialTheme.typography.bodyMedium,
             color = MaterialTheme.colorScheme.onSurfaceVariant,
         )
         Spacer(modifier = Modifier.height(24.dp))
         Button(onClick = onRetryClick) {
-            Text("Try Again")
+            Text(stringResource(R.string.auth_try_again))
         }
     }
 }

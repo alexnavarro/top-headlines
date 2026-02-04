@@ -27,11 +27,13 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import coil3.compose.AsyncImage
+import com.alexandrenavarro.topheadlines.R
 import com.alexandrenavarro.topheadlines.domain.model.Article
 
 @Composable
@@ -112,7 +114,7 @@ private fun HeadlinesContent(
                         )
                         Spacer(modifier = Modifier.height(16.dp))
                         Button(onClick = onRetryClick) {
-                            Text("Retry")
+                            Text(stringResource(R.string.retry))
                         }
                     }
                 }

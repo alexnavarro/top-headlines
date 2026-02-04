@@ -52,18 +52,16 @@ class MainActivity : FragmentActivity() {
             }
 
             override fun onAuthenticationError(errorCode: Int, errString: CharSequence) {
-                // User cancelled or too many attempts — remain on locked screen
             }
 
             override fun onAuthenticationFailed() {
-                // Wrong fingerprint — BiometricPrompt stays open for retry
             }
         }
 
         val promptInfo = BiometricPrompt.PromptInfo.Builder()
-            .setTitle("Authentication required")
-            .setSubtitle("Use your fingerprint to access the app")
-            .setNegativeButtonText("Cancel")
+            .setTitle(getString(R.string.auth_title))
+            .setSubtitle(getString(R.string.biometric_prompt_subtitle))
+            .setNegativeButtonText(getString(R.string.biometric_prompt_cancel))
             .build()
 
         BiometricPrompt(this, executor, callback).authenticate(promptInfo)

@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">Top headlines</string>
+    <string name="auth_title">Authentication required</string>
+    <string name="auth_subtitle">Please verify your identity to continue</string>
+    <string name="auth_try_again">Try Again</string>
+    <string name="biometric_prompt_subtitle">Use your fingerprint to access the app</string>
+    <string name="biometric_prompt_cancel">Cancel</string>
+    <string name="detail_title">Detail</string>
+    <string name="back">Back</string>
+    <string name="retry">Retry</string>
 </resources>
