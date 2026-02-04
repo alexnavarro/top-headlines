@@ -141,6 +141,29 @@ class NewsRepositoryImplTest {
     }
 
     @Test
+    fun `given content with trailing char count when getTopHeadlines then strips it`() = runTest {
+        val articlesDto = listOf(
+            ArticleDto(
+                source = SourceDto(id = "src", name = "Source"),
+                author = null,
+                title = "Title",
+                description = "Desc",
+                url = "https://example.com",
+                urlToImage = null,
+                publishedAt = "2024-01-15T10:30:00Z",
+                content = "Some article text here [+222 chars]",
+            )
+        )
+        fakeDataSource.result = AppResult.Success(articlesDto)
+
+        val result = repository.getTopHeadlines()
+
+        assertTrue(result is AppResult.Success)
+        val article = (result as AppResult.Success).data[0]
+        assertEquals("Some article text here", article.content)
+    }
+
+    @Test
     fun `given datasource returns article with null fields when getTopHeadlines then maps to empty strings`() = runTest {
         val articlesDto = listOf(
             ArticleDto(
