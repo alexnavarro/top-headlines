@@ -7,5 +7,5 @@ sealed interface Route {
     data object Headlines : Route
 
     @Serializable
-    data class Detail(val articleUrl: String) : Route
+    data class Detail(val articleId: String) : Route
 }

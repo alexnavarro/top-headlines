@@ -18,7 +18,7 @@ import androidx.compose.ui.Modifier
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun DetailScreen(
-    articleUrl: String,
+    articleId: String,
     onBackClick: () -> Unit,
     modifier: Modifier = Modifier,
 ) {
@@ -44,7 +44,7 @@ fun DetailScreen(
                 .padding(innerPadding),
             contentAlignment = Alignment.Center,
         ) {
-            Text("Detail Screen\n$articleUrl")
+            Text("Detail Screen\n$articleId")
         }
     }
 }

@@ -9,9 +9,6 @@ import androidx.navigation.compose.rememberNavController
 import androidx.navigation.toRoute
 import com.alexandrenavarro.topheadlines.ui.detail.DetailScreen
 import com.alexandrenavarro.topheadlines.ui.headlines.HeadlinesScreen
-import java.net.URLDecoder
-import java.net.URLEncoder
-import java.nio.charset.StandardCharsets
 
 @Composable
 fun NewsNavHost(
@@ -25,17 +22,15 @@ fun NewsNavHost(
     ) {
         composable<Route.Headlines> {
             HeadlinesScreen(
-                onArticleClick = { articleUrl ->
-                    val encodedUrl = URLEncoder.encode(articleUrl, StandardCharsets.UTF_8.toString())
-                    navController.navigate(Route.Detail(encodedUrl))
+                onArticleClick = { articleId ->
+                    navController.navigate(Route.Detail(articleId))
                 }
             )
         }
         composable<Route.Detail> { backStackEntry ->
             val route: Route.Detail = backStackEntry.toRoute()
-            val decodedUrl = URLDecoder.decode(route.articleUrl, StandardCharsets.UTF_8.toString())
             DetailScreen(
-                articleUrl = decodedUrl,
+                articleId = route.articleId,
                 onBackClick = { navController.popBackStack() }
             )
         }
