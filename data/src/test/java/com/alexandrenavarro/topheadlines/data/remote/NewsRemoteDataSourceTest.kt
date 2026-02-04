@@ -16,7 +16,7 @@ import java.io.IOException
 
 class NewsRemoteDataSourceTest {
 
-    private lateinit var dataSource: NewsRemoteDataSource
+    private lateinit var dataSource: NewsRemoteDataSourceImpl
     private lateinit var fakeNewsApiService: FakeNewsApiService
 
     private val source = "bbc-news"
@@ -25,7 +25,7 @@ class NewsRemoteDataSourceTest {
     @Before
     fun setUp() {
         fakeNewsApiService = FakeNewsApiService()
-        dataSource = NewsRemoteDataSource(
+        dataSource = NewsRemoteDataSourceImpl(
             newsApiService = fakeNewsApiService,
             source = source,
             apiKey = apiKey,

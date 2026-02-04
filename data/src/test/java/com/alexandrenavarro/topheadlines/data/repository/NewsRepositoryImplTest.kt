@@ -45,7 +45,8 @@ class NewsRepositoryImplTest {
         val articles = (result as AppResult.Success).data
         assertEquals(1, articles.size)
         with(articles[0]) {
-            assertEquals("https://example.com/article", id)
+            assertEquals("bbc-news_https://example.com/article", id)
+            assertEquals("bbc-news", sourceId)
             assertEquals("Test Title", title)
             assertEquals("Test Description", description)
             assertEquals("https://example.com/article", url)
@@ -95,7 +96,7 @@ class NewsRepositoryImplTest {
         fakeDataSource.result = AppResult.Success(articlesDto)
         repository.getTopHeadlines()
 
-        val article = repository.getArticleById("https://example.com/article")
+        val article = repository.getArticleById("bbc-news_https://example.com/article")
 
         assertEquals("Test Title", article?.title)
         assertEquals("https://example.com/article", article?.url)
@@ -103,7 +104,7 @@ class NewsRepositoryImplTest {
 
     @Test
     fun `given getTopHeadlines not called when getArticleById then returns null`() {
-        val article = repository.getArticleById("https://example.com/article")
+        val article = repository.getArticleById("bbc-news_https://example.com/article")
 
         assertEquals(null, article)
     }
@@ -113,7 +114,7 @@ class NewsRepositoryImplTest {
         fakeDataSource.result = AppResult.Error(IOException("Network error"))
         repository.getTopHeadlines()
 
-        val article = repository.getArticleById("https://example.com/article")
+        val article = repository.getArticleById("bbc-news_https://example.com/article")
 
         assertEquals(null, article)
     }
@@ -122,11 +123,11 @@ class NewsRepositoryImplTest {
     fun `given article with blank id when getTopHeadlines then does not cache it`() = runTest {
         val articlesDto = listOf(
             ArticleDto(
-                source = SourceDto(id = "src", name = "Source"),
+                source = null,
                 author = null,
                 title = "No URL",
                 description = "Desc",
-                url = "",
+                url = null,
                 urlToImage = null,
                 publishedAt = "2024-01-15T10:30:00Z",
                 content = null,
@@ -184,6 +185,7 @@ class NewsRepositoryImplTest {
         assertTrue(result is AppResult.Success)
         val article = (result as AppResult.Success).data[0]
         assertEquals("", article.id)
+        assertEquals("", article.sourceId)
         assertEquals("", article.title)
         assertEquals("", article.description)
         assertEquals("", article.url)
@@ -195,17 +197,8 @@ class NewsRepositoryImplTest {
     }
 }
 
-private class FakeNewsRemoteDataSource : NewsRemoteDataSource(
-    newsApiService = FakeNewsApiService(),
-    source = "",
-    apiKey = "",
-) {
+private class FakeNewsRemoteDataSource : NewsRemoteDataSource {
     var result: AppResult<List<ArticleDto>> = AppResult.Success(emptyList())
 
     override suspend fun getTopHeadlines(): AppResult<List<ArticleDto>> = result
-}
-
-private class FakeNewsApiService : com.alexandrenavarro.topheadlines.data.remote.NewsApiService {
-    override suspend fun getTopHeadlines(sources: String, apiKey: String) =
-        throw NotImplementedError("Not used in this test")
 }
