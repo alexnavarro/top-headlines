@@ -1,5 +1,7 @@
-package com.alexandrenavarro.topheadlines.ui.auth
+package com.alexandrenavarro.topheadlines.di
 
+import com.alexandrenavarro.topheadlines.ui.auth.BiometricAuthenticator
+import com.alexandrenavarro.topheadlines.ui.auth.DefaultBiometricAuthenticator
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn
