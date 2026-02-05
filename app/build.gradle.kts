@@ -75,6 +75,10 @@ android {
     }
 }
 
+composeCompiler {
+    stabilityConfigurationFile = project.layout.projectDirectory.file("compose-stability.conf")
+}
+
 dependencies {
     implementation(project(":core"))
     implementation(project(":data"))
